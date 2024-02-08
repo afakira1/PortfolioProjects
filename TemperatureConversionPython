@@ -1,0 +1,67 @@
+"""
+The purpose of this program is to take a temperature in fahrenheit as an input from the user
+and convert it into Celsius, Kelvin, Rankine, Reaumur, Delisle, Newton, and Romer.
+"""
+
+# These lines of code create the program intro/explanation to the user
+print(f'{"="*55}')
+print(f'Program to Convert a Fahrenheit Temperature to Celsius, \nKelvin, Rankine, Reaumur, Delisle, Newton, and Romer.')
+print(f'{"="*55}')
+
+
+# Asking the user to input a temperature in fahrenheit
+fahTemp = eval(input('Enter a temperature in fahrenheit: '))
+
+
+# Creating variables for the output table labels
+FAHTITLE = "Degrees of Fahrenheit"
+CELTITLE = "Degrees of Celsius"
+KELTITLE = "Degrees of Kelvin"
+RANKTITLE = "Degrees of Rankine"
+REAUTITLE = "Degrees of Reaumur"
+DELTITLE = "Degrees of Delisle"
+NEWTITLE = "Degrees of Newton"
+ROMTITLE = "Degrees of Romer"
+
+# Temperature conversions from fahrenheit
+celsiusTemp = (fahTemp - 32) * (5/9)
+kelvinTemp = (fahTemp + 459.67) * (5/9)
+rankineTemp = fahTemp + 459.67
+reaumurTemp = (fahTemp - 32) * (4/9)
+delisleTemp = (212 - fahTemp) * (5/6)
+newtonTemp = (fahTemp - 32) * (11/60)
+romerTemp = (fahTemp - 32) * (7/24) + 7.5
+
+# Converting temperatures to strings and formatting them to have two decimal places and the appropriate temperature symbol
+strFahTemp = f"{fahTemp: .2f} F"
+strCelTemp = f"{celsiusTemp: .2f} C"
+strKelTemp = f"{kelvinTemp: .2f} K"
+strRanTemp = f"{rankineTemp: .2f} Ra"
+strReaTemp = f"{reaumurTemp: .2f} Re"
+strDelTemp = f"{delisleTemp: .2f} De"
+strNewTemp = f"{newtonTemp: .2f} N"
+strRomTemp = f"{romerTemp: .2f} Ro"
+
+# Completing the formatting and structure of the resulting table of temperature conversions
+print(f'\n {"="*23} {"="*23} {"="*23}')
+print(f'|{FAHTITLE:^23}| {CELTITLE:^22}| {KELTITLE:^22}|')
+print(f' {"="*23} {"="*23} {"="*23}')
+print(f'|{" "*23}| {" "*22}| {" "*22}|')
+print(f"|{strFahTemp:^23}| {strCelTemp:^22}| {strKelTemp:^22}|")
+print(f'|{" "*23}| {" "*22}| {" "*22}|')
+print(f' {"="*23} {"="*23} {"="*23}')
+print(f'|{RANKTITLE:^23}| {REAUTITLE:^22}| {DELTITLE:^22}|')
+print(f' {"="*23} {"="*23} {"="*23}')
+print(f'|{" "*23}| {" "*22}| {" "*22}|')
+print(f"|{strRanTemp:^23}| {strReaTemp:^22}| {strDelTemp:^22}|")
+print(f'|{" "*23}| {" "*22}| {" "*22}|')
+print(f' {"="*23} {"="*23} {"="*23}')
+print(f'|{NEWTITLE:^23}| {ROMTITLE:^22}|') 
+print(f' {"="*23} {"="*23}')
+print(f'|{" "*23}| {" "*22}|')
+print(f"|{strNewTemp:^23}| {strRomTemp:^22}|")
+print(f'|{" "*23}| {" "*22}|')
+print(f' {"="*23} {"="*23}')
+
+
+
