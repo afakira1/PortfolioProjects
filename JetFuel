@@ -1,0 +1,44 @@
+"""
+This program takes in the total gallons of jet fuel a consumer want to purchase
+and calculates the liters, barrells of oil, CO2 emissions, BTUs, pounds, and cost
+of the total fuel that the consumer want to buy. Finally, there is an output that
+tells the user how long a Boeing 777 aircraft can fly with that amount of Fuel.
+"""
+
+#Constants
+LITERS_PER_GALLONS = 3.7854
+FUEL_PER_BARRELL = 4
+CO2_POUNDS = 21.095
+BTUS = 128100.00
+POUNDS_PER_GALLON = 6.7
+PRICE_PER_GALLON = 6.43
+BURN_RATE_GALLON = 2150
+
+#Calculations
+gallonsPurchased = round(eval(input('Please enter the number gallons of jet fuel you wish to purchase: ')),2)
+gallonsPurchased = float(gallonsPurchased)
+gallonsToLiters = gallonsPurchased * LITERS_PER_GALLONS # Converting gallons liters
+barrellsOil = gallonsPurchased/FUEL_PER_BARRELL # Converting gallons to barrells of oil used
+carbonDioxide = gallonsPurchased * CO2_POUNDS # Converting gallons to CO2 emissions
+btu = gallonsPurchased * BTUS # Converting gallons to BTUs
+gallonPounds = gallonsPurchased * POUNDS_PER_GALLON # Converting gallons to pounds
+gallonsCost = gallonsPurchased * PRICE_PER_GALLON # Calculating price of gallons requested
+
+# Calculating the flight length of a Boeing 777 Aircraft based on the fuel burn rate
+burnRateMinutes = BURN_RATE_GALLON/60
+totalMinutes = gallonsPurchased/burnRateMinutes
+hours = int(totalMinutes // 60)
+minutes = int(totalMinutes % 60)
+
+print(f'- - - - - - - -')  
+print(f'Original number of gallons is {gallonsPurchased:,.2f}')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel is equivalent of {gallonsToLiters:,.2f} Liters')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel requires {barrellsOil:,.2f} barrells of oil.')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel produces {carbonDioxide:,.2f} pounds of CO2')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel produces {btu:,.2f} BTUs of energy')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel weighs {gallonPounds:,.2f} Pounds')
+print(f'{gallonsPurchased:,.2f} gallons of jet fuel costs ${gallonsCost:,.2f}')
+print(f'- - - - - - - -')
+
+print(f'Total flight time of a Boeing 777 aircraft: {hours} hours {minutes} minutes ')
+
