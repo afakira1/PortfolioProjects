@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@author: Amer Fakira
+
+Programming Project: Citation Parser
+
+The purpose of this project is to parse a list of citation strings that are in APA format.
+Types of publications in this project include books, magazine articles, and journal articles.
+The prgoram must read a citation of these publications and output the category, and a list of 
+source components, separated by field.
+
+"""
+
+# Asking The user to input a citation
+citation = input("Please enter a reference: \n")
+AUTHORS = citation[0:citation.find('(') - 1]
+DATE = citation[citation.find('(')+1:citation.find(')')]
+VOLUME = (((citation[citation.rfind('(')-3:citation.rfind(')')-2].strip('(')).strip()).strip(',')).strip()
+ISSUE = citation[citation.rfind('(')+1:citation.rfind(')')]
+PAGES = citation[citation.rfind(',')+1:].strip()
+PUBLISHER = citation[citation.rfind(':')+1:].strip()
+
+#printDate
+if ',' in DATE:
+    year = (DATE[:DATE.find(",")]).strip()
+    month = (DATE[DATE.find(",") + 1:]).strip()
+    if " " in month:
+        month = (DATE[DATE.find(",") + 1: -2]).strip()
+else:
+    year = DATE
+    month = ''
+
+#Accounting for periods, exclamation marks, and question marks at the end of the Title
+if '?' in citation:
+    TITLE = citation[citation.find(')')+2:citation.rfind('?')+1].strip()
+    address = citation[citation.rfind('?')+1:citation.rfind(':')].strip()
+    PUBLICATIONTITLE = citation[citation.rfind('?')+1:citation.rfind(',')]
+elif '!' in citation:
+    TITLE = citation[citation.find(')')+2:citation.rfind('!')+1].strip()
+    address = citation[citation.rfind('!')+1:citation.rfind(':')].strip()
+    PUBLICATIONTITLE = citation[citation.rfind('!')+1:citation.rfind(',')]
+else:
+    TITLE = citation[citation.find(')')+2:citation.rfind('.')+1].strip()
+    address = citation[citation.rfind('.')+1:citation.rfind(':')].strip()
+    PUBLICATIONTITLE = citation[citation.rfind('.')+1:citation.rfind(',')]
+
+#Removing extra space in the Publication Title
+PUBTITLE = PUBLICATIONTITLE[:PUBLICATIONTITLE.find(',')].strip()
+
+#Clarifying Categories
+if ',' in DATE:
+    CATEGORY = 'MAGAZINE ARTICLE'
+    address = ''
+elif citation.count(')') == 2:
+    CATEGORY = 'JOURNAL ARTICLE'
+    address = ''   
+else:
+    address = address
+    CATEGORY = 'BOOK'
+
+#Clarifying certain rules on Publisher, pages, volume, pubtitle, and issue    
+if CATEGORY == 'BOOK':
+    PUBLISHER = PUBLISHER
+    PAGES = ''
+    VOLUME = ''
+    PUBTITLE = ''
+    ISSUE = ''
+else:
+    PUBLISHER = ''
+    PAGES = PAGES
+    VOLUME = VOLUME
+    ISSUE = ISSUE
+
+
+
+# Formatting the output table
+print(f'{CATEGORY}- - - - - - - - - - - - - - - - - - - - - - - - - - -')  
+print(f'                 AUTHORS: {AUTHORS}')
+print(f'                   TITLE: {TITLE}')
+print(f'                    YEAR: {year}')
+print(f'                   MONTH: {month}')
+print(f'       PUBLICATION TITLE: {PUBTITLE}')
+print(f'                  VOLUME: {VOLUME}')
+print(f'                   ISSUE: {ISSUE}')
+print(f'                   PAGES: {PAGES}')
+print(f'               PUBLISHER: {PUBLISHER}')
+print(f'                 ADDRESS: {address}')
+print(f'- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
