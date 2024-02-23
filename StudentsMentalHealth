@@ -1,0 +1,62 @@
+-- In this project, I am analyzing student data froma 2018 Japanese study that looked at students mental health to discover if international students have higher risk of mental health problems than their domestic class mates.
+-- The study found that international students have a higher risk of mental health difficulties than the general population, and that social connectedness (belonging to a social group) and acculturative stress (stress associated with joining a new culture) are predictive of depression.
+
+-- Step 1: Running the code to save the file as a CSV, and to take a preliminary look at the data available.
+
+SELECT COUNT (*)
+FROM students;
+
+-- Step 2: Counting all the records in the data set to see what the student sample size is
+
+SELECT COUNT(inter_dom)
+FROM students
+WHERE inter_dom IS NOT NULL
+GROUP BY inter_dom;
+
+-- Step 3: The next step is to count all of the records in the data by student type. This will help to clarify the proportion of 286 students which are international or domestic in the data set. In order to not take into account students who we do not have an international or domestic value for, we will exclude those students.
+
+SELECT MIN(todep) AS min_phq, MAX(todep) AS max_phq, ROUND(AVG(todep),2) AS avg_phq
+FROM students;
+
+-- Step 4: The next step is to find the summary statisitcs of each of the three diagnostic tests in the data set. These three tests are PHQ-9 Test, SCS test, and ASISS test.
+
+SELECT MIN(toas) AS min_as, MAX(toas) AS max_as, ROUND(AVG(toas),2) AS avg_as
+FROM students;
+
+SELECT MIN(todep) AS min_phq_inter, MAX(todep) AS max_phq_inter, ROUND(AVG(todep),2) AS avg_phq_inter
+FROM students
+WHERE inter_dom = 'Inter';
+
+SELECT MIN(tosc) AS min_scs_inter, MAX(tosc) AS max_scs_inter, ROUND(AVG(tosc),2) AS avg_scs_inter
+FROM students
+WHERE inter_dom = 'Inter';
+
+-- Step 5: The next step is to summarize the data for international students only. I will now filter out the domestic students, and run the same tests on the three diagnostics tests.
+
+SELECT MIN(toas) AS min_as_inter, MAX(toas) AS max_as_inter, ROUND(AVG(toas),2) AS avg_as_inter
+FROM students
+WHERE inter_dom = 'Inter';
+
+SELECT MIN(todep) AS min_phq, MAX(todep) AS max_phq, ROUND(AVG(todep),2) AS avg_phq, MIN(tosc) AS min_scs, MAX(tosc) AS max_scs, ROUND(AVG(tosc),2) AS avg_scs, MIN(toas) AS min_as, MAX(toas) AS max_as, ROUND(AVG(toas),2) AS avg_as
+FROM students
+WHERE inter_dom IS NOT NULL
+GROUP BY inter_dom;
+
+SELECT MIN(toas) AS min_as_inter, MAX(toas) AS max_as_inter, ROUND(AVG(toas),2) AS avg_as_inter
+FROM students
+WHERE inter_dom = 'Inter';
+
+-- Step 6: Next, I would like to have a side by side comparison of the average scores on the three tests between international and domestic students.
+
+SELECT MIN(todep) AS min_phq, MAX(todep) AS max_phq, ROUND(AVG(todep),2) AS avg_phq, MIN(tosc) AS min_scs, MAX(tosc) AS max_scs, ROUND(AVG(tosc),2) AS avg_scs, MIN(toas) AS min_as, MAX(toas) AS max_as, ROUND(AVG(toas),2) AS avg_as
+FROM students
+WHERE inter_dom IS NOT NULL
+GROUP BY inter_dom;
+
+-- Step 7: I will now look at how the length of stay impacts the average diagnostic scores of international students.
+
+SELECT stay, ROUND(AVG(todep),2) AS average_phq, ROUND(AVG(tosc),2) AS average_scs, ROUND(AVG(toas),2) AS average_as
+FROM students
+WHERE inter_dom IS NOT NULL AND inter_dom = 'Inter'
+GROUP BY stay
+ORDER BY stay DESC
