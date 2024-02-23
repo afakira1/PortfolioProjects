@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+
+@author: amerfakira
+
+Program: Temperature Scales
+By: Amer Fakira
+
+The goal of this program is, given a chunk of text (through a file) and a keyword, locate
+the first occurrence of the keyword in the text, output the sentence in which
+the keyword appears and then display with the keyword capitalized.
+
+"""
+
+
+def fromFile(file):
+    file = open(file, 'r')
+    line = file.read() 
+    return line 
+
+
+
+textFile = input('Please enter the name of the file containing the text: ')
+#txtfile = 'text4.txt'
+textOrig = fromFile(textFile)
+print(f'Contents of the file {textFile}: ')
+
+print(textOrig)
+
+# Converting the text to all lowercase
+modifiedOrigText = textOrig.lower()
+
+modifiedOrigText = modifiedOrigText.replace('\n',' ')
+
+# Removing special characters and replacing with a 
+modifiedOrigText = modifiedOrigText.replace(',',' ') 
+modifiedOrigText = modifiedOrigText.replace('!','.')
+modifiedOrigText = modifiedOrigText.replace('?','.')
+modifiedOrigText = modifiedOrigText.replace(';',' ')
+modifiedOrigText = modifiedOrigText.replace(':',' ')
+modifiedOrigText = modifiedOrigText.replace('-',' ')
+
+
+modifiedOrigTextNoPeriods = modifiedOrigText.replace('.',' ')
+
+
+# Asking the user for the key word
+stringToFind = input("\nEnter a key word: ").lower()
+
+countOfTotalChar = len(textOrig)
+
+# Putting a space before and after the key word to get only the key word, and nothing containing the key word, I am not changing the original text.
+stringToFind += ' '
+stringToFind = ' ' + stringToFind
+
+modifiedOrigTextNoPeriods = " " + modifiedOrigTextNoPeriods # Putting a space at the beginning of the text to ensure the first word is properly located
+
+# Checking if they keyword is in the string
+exist = stringToFind in modifiedOrigTextNoPeriods
+
+if exist:
+    foundIndex = modifiedOrigTextNoPeriods.find(stringToFind) # Will return the index of the space before the word
+    keyWordLength = len(stringToFind) # Get the length of the keyword including the spaces
+    wordFound = modifiedOrigTextNoPeriods[foundIndex:foundIndex + keyWordLength].upper().strip() # Slicing out the keyword starting at the foundIndex + the keyword length, making it uppercase, and removing the white space
+    
+else:
+    print(f'{stringToFind} does not appear in the text')
+
+# Finding the beginning and ending of the sentence
+endOfSentenceIndex = modifiedOrigText.find('.',foundIndex)
+beginOfSentenceIndex = modifiedOrigText.rfind('.',0,foundIndex)
+
+if beginOfSentenceIndex == 0:
+    sentence = textOrig[beginOfSentenceIndex:endOfSentenceIndex + 1].strip()
+else:
+    sentence = textOrig[beginOfSentenceIndex + 1:endOfSentenceIndex + 1].strip()
+    
+    
+
+# Creating an upper case version of the keyword to insert into the final output
+stringToFindUpper = wordFound.upper()
+
+
+# Locating the keyword index, and extracting the sentence based on its index position
+posKeywordInSentence = sentence.lower().find(stringToFindUpper.lower())
+if posKeywordInSentence != 0:
+    firstHalfSentence = sentence[0:posKeywordInSentence]
+    secondHalfSentence = sentence[posKeywordInSentence + len(stringToFind) -2:]
+    modifiedSentence = firstHalfSentence + stringToFindUpper + secondHalfSentence
+else:
+    secondHalfSentence = sentence[posKeywordInSentence - 1 + len(stringToFind) - 1:]
+    modifiedSentence = stringToFindUpper + secondHalfSentence
+
+
+# Formatting The Output    
+print(f'\n{"-"*13}')
+print(f'Outputting the sentence: ')
+print(f'{"*"*5}')
+print(f'{modifiedSentence}')
