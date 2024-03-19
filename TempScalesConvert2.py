@@ -3,10 +3,7 @@
 """
 @author: amerfakira
 
-CS602-1
-Assignment 3: Temperature Scales Convert 2.0
-By: Amer Fakira
-For: Professor David Rude
+
 
 The purpose of this program is to take in a temperature scale to convert FROM, and to convert TO
 from the user, and to perform the proper conversion. The program consists of 5 functions (fromTemp(),
